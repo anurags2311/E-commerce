@@ -1,0 +1,266 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock %}
+{% block breadcrumb %}
+<div class="item primary-font">
+    <a href="{% url 'cart' %}"><span>Cart</span></a>
+</div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin/css/main.css' %}">
+<style>
+    .cart-container {
+        width: 60%;
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        animation: fadeIn 0.5s ease-in-out;
+        margin: auto;
+        margin-top: 150px;
+    }
+
+    h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 26px;
+    }
+
+    .cart-item {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid #ddd;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .cart-item:hover {
+        transform: scale(1.02);
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 8px;
+    }
+
+    .product-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 8px;
+        margin-right: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .cart-details {
+        flex: 1;
+    }
+
+    .cart-details h3 {
+        margin: 0;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: #222;
+    }
+
+    .cart-details p {
+        margin: 5px 0;
+        color: #666;
+        font-size: 14px;
+    }
+
+    .remove-btn {
+        background: #ff4d4d;
+        color: white;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .remove-btn:hover {
+        background: #d93636;
+    }
+
+    .cart-summary {
+        text-align: center;
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 2px solid #ddd;
+    }
+
+    .checkout-btn {
+        background: #28a745;
+        color: white;
+        width: 100%;
+        padding: 14px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: bold;
+        margin-top: 15px;
+        transition: background 0.3s ease-in-out;
+    }
+
+    .checkout-btn:hover {
+        background: #218838;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2>Shopping Cart</h2>
+
+    {% if cart_items %}
+        {% for data in cart_items %}
+        <div class="cart-item" id="item-{{ data.Products.id }}">
+            <img src="{{ data.image }}" alt="Product Image" class="product-img">
+            <div class="cart-details">
+                <h3>{{ data.name }}</h3>
+                <p>Quantity: <span id="quantity-{{ data.Products.id }}">{{ data.quantity }}</span></p>
+                <p>Total: ₹<span id="total-{{ data.Products.id }}">{{ data.total_amount }}</span></p>
+                <button class="remove-btn" onclick="removeItem('{{ data.Products_id }}', '{{ data.total_amount }}')">Remove</button>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="cart-summary">
+            <h3>Cart Summary</h3>
+            <p>Total Amount: ₹<span id="cart-total">{{ total_amount }}</span></p>
+            <script src="https://js.stripe.com/v3/"></script>
+            <button class="checkout-btn" id="payButton">Proceed to Checkout</button>
+        </div>
+
+    {% else %}
+        <div style="text-align: center; padding: 40px;">
+            <h3>Your cart is empty</h3>
+            <p>You have products in your Wishlist waiting to be yours!</p>
+            <div style="margin-top: 30px;">
+                <a href="{% url 'home' %}" class="checkout-btn" style="background: #007bff; text-decoration: none; display: inline-block; margin: 10px;">Go to Shopping</a>
+                <a href="{% url 'wishlist' %}" class="checkout-btn" style="background: #ffc107; color: black; text-decoration: none; display: inline-block; margin: 10px;">Add from Wishlist</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const payButton = document.getElementById("payButton");
+        if (payButton) {
+            payButton.addEventListener("click", async function () {
+                try {
+                    let cartTotalElement = document.getElementById("cart-total");
+                    if (!cartTotalElement) {
+                        throw new Error("Cart total element not found");
+                    }
+
+                    let cartTotal = cartTotalElement.innerText.trim();
+                    cartTotal = parseFloat(cartTotal.replace(/[^0-9.]/g, ""));
+
+                    const response = await fetch(`/create-checkout-session/?user={{ user.id }}`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ cart_total: cartTotal })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("Failed to create checkout session");
+                    }
+
+                    const data = await response.json();
+
+                    if (!data.id) {
+                        throw new Error("Invalid session ID received");
+                    }
+
+                    const stripe = Stripe("pk_test_51R10aqBSTAAEIUsJeWyFcBE8c4fPrWaLT2Y63arQO8g3N0JRVIHjFNyG0FVJVEUYfwjTU3QOUuYSeqlV7izsb9dZ00hZxs4EJk");
+                    stripe.redirectToCheckout({ sessionId: data.id });
+                } catch (error) {
+                    console.error("Checkout Error:", error);
+                    alert("Something went wrong. Please try again.");
+                }
+            });
+        }
+    });
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("active");
+    }
+
+    document.addEventListener('click', function (event) {
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.querySelector('.menu-btn');
+        if (!sidebar.contains(event.target) && !menuBtn.contains(event.target)) {
+            sidebar.classList.remove('active');
+        }
+    });
+
+    $(document).ready(function () {
+        $(".sidebar ul li.parent > a").click(function (e) {
+            e.preventDefault();
+            const parentLi = $(this).parent();
+            parentLi.toggleClass("open");
+            parentLi.children(".submenu").slideToggle(200);
+        });
+    });
+
+    function removeItem(cartId, productPrice) {
+        $.ajax({
+            url: "/remove_cart/" + cartId,
+            type: "GET",
+            success: function (response) {
+                if (response.status === "success") {
+                    $("#item-" + cartId).remove();
+                    updateTotalAmount(productPrice);
+                    toastr.success(response.message);
+                } else {
+                    toastr.error(response.message);
+                }
+            },
+            error: function () {
+                toastr.error("Something went wrong. Please try again.");
+            }
+        });
+    }
+
+    function updateTotalAmount(productPrice) {
+        let currentTotal = parseFloat(document.getElementById("cart-total").innerText);
+        let newTotal = currentTotal - parseFloat(productPrice);
+        document.getElementById("cart-total").innerText = newTotal.toFixed(2);
+
+        if (newTotal <= 0) {
+            document.getElementById("cart-total").innerText = "0";
+        }
+    }
+
+    function checkout() {
+        toastr.info("Redirecting to checkout...");
+        setTimeout(() => {
+            window.location.href = "/checkout";
+        }, 2000);
+    }
+</script>
+{% endblock %}

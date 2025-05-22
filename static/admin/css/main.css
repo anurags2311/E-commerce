@@ -1,0 +1,300 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.header {
+    background-color: #fff;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    z-index: 1000;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    max-width: 300px;
+    position: relative;
+    border-radius: 30px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+.search-bar input[type="text"] {
+    padding: 10px;
+    border: none;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 30px 0 0 30px;
+    transition: all 0.3s ease;
+}
+
+.search-bar input[type="text"]:focus {
+    outline: none;
+    border: 2px solid #ffffff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.search-bar input[type="image"] {
+    position: absolute;
+    right: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.search-bar input[type="image"]:hover {
+    background-color: #f1f1f1;
+}
+
+.logo-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+}
+
+.logo-container img {
+    height: 60px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 35px;
+}
+
+.header-actions img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 38px;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    min-width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+}
+
+.dropdown-content a:hover {
+    display: flex;
+    background-color: #f2f2f2;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Navbar & Mega Dropdown */
+.navbar {
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    position: relative;
+    z-index: 999;
+}
+
+.navbar ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    gap: 40px;
+}
+
+.navbar ul li {
+    position: relative;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    padding: 10px 15px;
+    display: block;
+}
+
+.submenu {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100vw;
+    background-color: #fff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: row;
+    justify-content: center;
+    gap: 80px;
+    padding: 40px 60px;
+    z-index: 998;
+}
+
+.navbar ul li:hover .submenu {
+    display: flex;
+}
+
+.submenu ul {
+    list-style: none;
+}
+
+.submenu li {
+    margin: 8px 0;
+}
+
+.submenu a {
+    text-decoration: none;
+    color: #333;
+    font-weight: normal;
+}
+
+/* .bread-crumb {
+    background-color: #f9f9f9;
+    padding: 10px 20px;
+    font-size: 14px;
+    color: #555;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+} */
+
+.breadcrumb-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.breadcrumb-inner-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 5px;
+}
+
+.breadcrumb-inner-container .item {
+    display: flex;
+    align-items: center;
+}
+
+.breadcrumb-inner-container a {
+    color: #000000;
+    text-decoration: none;
+}
+
+.breadcrumb-inner-container a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-inner-container .divider {
+    margin: 0 6px;
+    color: #aaa;
+}
+
+.primary-font {
+    font-weight: bold;
+    color: #333;
+}
+
+/* --- New CSS to Position Breadcrumb Left of Navbar --- */
+.bread-crumb {
+    position: absolute;
+    top: 120px; /* Adjust based on your header/nav height */
+    left: 20px;
+    z-index: 1001;
+    background-color: transparent;
+    box-shadow: none;
+}
+/* Footer Styles */
+
+.footer {
+    background-color: #222;
+    color: #fff;
+    padding: 20px 0;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    display: none; /* Initially hide the footer */
+}
+
+.footer .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer .footer-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+    transition: color 0.3s ease;
+}
+
+.footer .footer-links a:hover {
+    color: #f4b400; /* Highlight color */
+}
+
+.footer .footer-social a {
+    margin-left: 15px;
+    display: inline-block;
+}
+
+.footer .footer-social img {
+    width: 25px;
+    height: 25px;
+    transition: transform 0.3s ease;
+}
+
+.footer .footer-social img:hover {
+    transform: scale(1.1); /* Slight zoom effect */
+}
+
+.footer .footer-bottom {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 12px;
+    color: #ccc;
+}
+
+.footer .footer-bottom p {
+    margin: 0;
+}
+
+/* Ensure the body or main content has enough space for the footer */
+body {
+    padding-bottom: 80px; /* Ensure space for the fixed footer */
+}
+

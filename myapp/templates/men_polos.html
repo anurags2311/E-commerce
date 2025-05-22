@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Men's Polos{% endblock %}
+{% block breadcrumb %}
+    <div class="item">
+        <a href="{% url 'men' %}"><span>Men</span></a>
+        <span class="divider">/</span>
+    </div>
+    <div class="item primary-font">
+        <a href="{% url 'men_polos' %}"><span>Men Polo T-Shirts</span></a>
+    </div>
+{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin/css/main.css' %}">
+    
+{% endblock %}
+
+{% block content %}
+    {% include 'product_view.html' %}
+{% endblock %}

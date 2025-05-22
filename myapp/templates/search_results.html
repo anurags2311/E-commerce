@@ -1,0 +1,13 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Men's Shirts{% endblock %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+<h2>Search results for "{{ query }}"</h2>
+    {% include 'product_view.html' %}
+{% endblock %}

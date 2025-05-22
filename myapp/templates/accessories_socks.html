@@ -1,0 +1,18 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Accessories Socks{% endblock %}
+{% block breadcrumb %}
+    <div class="item">
+        <a href="{% url 'accessories' %}"><span>Accessories</span></a>
+        <span class="divider">/</span>
+    </div>
+    <div class="item primary-font">
+        <a href="{% url 'accessories_socks' %}"><span>Accessories Socks</span></a>
+    </div>
+    {% endblock %}
+
+    {% block content %}
+        <!-- Include content from product_view.html -->
+        {% include 'product_view.html' %}
+    {% endblock %}

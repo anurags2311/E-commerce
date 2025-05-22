@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Women's Bottom Wear{% endblock %}
+{% block breadcrumb %}
+    <div class="item">
+        <a href="{% url 'women' %}"><span>Women</span></a>
+        <span class="divider">/</span>
+    </div>
+    <div class="item primary-font">
+        <a href="{% url 'women_bottomwear' %}"><span>Women Bottom Wear</span></a>
+    </div>
+{% endblock %}
+
+{% block content %}
+    {% include 'product_view.html' %}
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block title %}PeaQ Home{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'admin/css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <!-- Include content from product_view.html -->
+    {% include 'product_view.html' %}
+{% endblock %}
+
+

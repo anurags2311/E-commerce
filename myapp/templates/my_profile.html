@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .profile-container {
+            max-width: 600px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .profile-info {
+            margin-top: 20px;
+        }
+
+        .profile-info label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .profile-info p {
+            margin: 0 0 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            display: inline-block;
+        }
+
+        .verify-btn {
+            margin-left: 10px;
+            padding: 8px 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .verify-btn:hover {
+            background-color: #218838;
+        }
+
+        .back-to-home-btn {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s ease-in-out;
+        }
+
+        .back-to-home-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-container">
+        <div class="profile-header">
+            <h1>Hi {{ user.username }}</h1>
+        </div>
+
+        <div class="profile-info">
+            <label>Full Name:</label>
+            <p>{{ user.name }}</p>
+
+            <label>Email Address:</label>
+            <p>{{ user.email }}</p>
+
+            <label>Phone Number:</label>
+            <p>{{ user.phone }}</p>
+            {% if not user.phone_verified %}
+                <!-- Send OTP Button -->
+                <form method="get" action="{% url 'send_otp' %}">
+                    <input type="hidden" name="token" value="{{ user.id }}">
+                    <button class="verify-btn" type="submit">Send OTP</button>
+                </form>
+
+                <!-- Verify OTP Form -->
+                <form method="post" action="{% url 'verify_phone' %}?token={{ user.id }}">
+                    {% csrf_token %}
+                    <input type="text" name="verification_code" placeholder="Enter verification code" required>
+                    <button class="verify-btn" type="submit">Verify</button>
+                </form>
+            {% endif %}
+
+            <label>Account Created On:</label>
+            <p>{{ user.date_joined|date:"F j, Y" }}</p>
+        </div>
+
+        <a href="{% url 'home' %}" class="back-to-home-btn">Back to Home</a>
+    </div>
+</body>
+</html>

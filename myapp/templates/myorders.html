@@ -1,0 +1,91 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}My Orders{% endblock %}
+{% block head %}
+
+
+<style>
+    h1 {
+        text-align: center;
+        font-size: 32px;
+        color: #222;
+        margin: 30px 0 20px;
+        font-weight: 600;
+    }
+
+    .order-container {
+        margin: 20px auto;
+        max-width: 900px;
+        background: #fff;
+        color: #111;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .order-item {
+        border-bottom: 1px solid #e0e0e0;
+        padding: 16px 0;
+    }
+
+    .order-item:last-child {
+        border-bottom: none;
+    }
+
+    .order-item h3 {
+        margin: 0;
+        font-size: 20px;
+        color: #444;
+        font-weight: 500;
+    }
+
+    .order-item p {
+        margin: 4px 0;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .cart-item {
+        margin-left: 20px;
+        font-size: 14px;
+        padding: 6px 0;
+        border-left: 2px solid #ddd;
+        padding-left: 12px;
+        color: #333;
+    }
+
+    .cart-item p {
+        margin: 2px 0;
+    }
+</style>
+
+{% endblock %}
+
+
+{% block content %}
+    <h1>My Orders</h1>
+    <div class="order-container">
+        {% if orders %}
+            {% for order in orders %}
+                <div class="order-item">
+                    <h3>Transaction ID: {{ order.transaction.transaction_id }}</h3>
+                    <p>Total Amount: ${{ order.transaction.total_amount }}</p>
+                    <p>Order Date: {{ order.transaction.created_at }}</p>
+                    
+                    <h4>Cart Items:</h4>
+                    {% for item in order.cart_items %}
+                        <div class="cart-item">
+                            <p>Product Name: {{ item.product.name }}</p>
+                            <p>Quantity: {{ item.quantity }}</p>
+                            <p>Total Price: ₹{{ item.total_price }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No orders found.</p>
+        {% endif %}
+    </div>
+{% endblock %}

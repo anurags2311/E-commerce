@@ -1,0 +1,211 @@
+.product-container {
+    max-width: 1000px;
+    margin: 60px auto 40px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 30px;
+    background-color: #fff;
+    position: relative;
+}
+
+.product-image {
+    flex: 1;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.wishlist-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: #ff6b81;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wishlist-btn:hover {
+    background-color: #ff4757;
+}
+
+.back-link {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    font-size: 16px;
+    color: #1e90ff;
+    text-decoration: none;
+}
+
+.back-link::before {
+    content: "← ";
+}
+
+.product-details {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.product-details h1 {
+    margin-bottom: 10px;
+}
+
+.product-details p {
+    margin-bottom: 15px;
+    color: #555;
+}
+
+.price {
+    font-weight: bold;
+    color: #2e8b57;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.add-to-cart-btn {
+    padding: 12px 20px;
+    background-color: #1e90ff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    width: fit-content;
+}
+
+.add-to-cart-btn:hover {
+    background-color: #0d6efd;
+}
+
+/* Related Products Section */
+.related-products-grid {
+
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+        gap: 30px;
+    }
+
+.related-products {
+    padding: 30px 40px;
+    margin-top: 80px;
+    background-color: #fff;
+}
+
+.related-products h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Horizontal scroll container */
+.related-product-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+}
+
+.related-product-scroll::-webkit-scrollbar {
+    height: 8px;
+}
+
+.related-product-scroll::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius: 4px;
+}
+
+.related-product-scroll::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+/* Product Card (reuse your style) */
+.related-product-card {
+    flex: 0 0 auto;
+    width: 250px;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 460px;
+    scroll-snap-align: start;
+    text-decoration: none;
+}
+
+.related-product-card:hover {
+    transform: scale(1.03);
+}
+
+.related-product-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.related-product-card h3 {
+    font-size: 16px;
+    margin: 15px 0 10px;
+    color: #000000;
+    font-weight: lighter;
+    font-family: 'Poppins', sans-serif;
+    text-transform: capitalize;
+    text-decoration: none;
+}
+
+.related-product-card .price {
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+}
+
+/* Wishlist Icon */
+.related-product-card .wishlist-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px auto 0;
+}
+
+.related-product-card .wishlist-btn i {
+    font-size: 18px;
+    color: #666;
+}
+
+.related-product-card .wishlist-btn.liked i {
+    color: red;
+}

@@ -1,0 +1,89 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+    <link rel="stylesheet" href="{% static 'admin/css/product_view.css' %}">
+</head>
+<body>
+    <div class="main-content" id="main-content">
+        <div class="product-container">
+            {% for product in products %}
+                <div class="product-card">
+                    <a href="/product/{{ product.id }}/?user={{ user.id }}" class="product-card-link">
+                        <img src="{{ product.image }}" alt="Product Image" loading="lazy">
+                    </a>
+                    <a href="/product/{{ product.id }}/?user={{ user.id }}" class="product-card-link">
+                        <h2>{{ product.name }}</h2>
+                    </a>
+                    <div class="price-wishlist">
+                        <p>₹{{ product.price }}</p>
+                        <button class="wishlist-btn" onclick="addToWishlist(event, '{{ product.id }}', '{{ user.id }}', this)">
+                            <i class="fa fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            {% empty %}
+                <p>No products available.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {% if products.has_previous %}
+                <a href="?page=1">&laquo; First</a>
+                <a href="?page={{ products.previous_page_number }}">Previous</a>
+            {% endif %}
+        
+            {% for page_num in products.paginator.page_range %}
+                {% if page_num <= 5 or page_num >= products.number|add:"-2" and page_num <= products.number|add:"2" %}
+                    <a href="?page={{ page_num }}" class="{% if page_num == products.number %}current{% endif %}">
+                        {{ page_num }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        
+            {% if products.has_next %}
+                <a href="?page={{ products.next_page_number }}">Next</a>
+                <a href="?page={{ products.paginator.num_pages }}">Last &raquo;</a>
+            {% endif %}
+        </div>
+    </div>
+    <script>
+        function addToWishlist(event, productId, userId, button) {
+            // Prevent the click event from propagating to the parent <a> tag
+            event.stopPropagation();
+
+            if (!userId || isNaN(userId)) {
+                alert("Invalid user ID. Please log in.");
+                return;
+            }
+
+            // Toggle the "liked" state of the button
+            button.classList.toggle('liked');
+
+            // Make an AJAX request to add the product to the wishlist
+            fetch(`/product_wishlist/${productId}/?user=${userId}`, {
+                method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    button.querySelector('i').style.color = 'red'; // Turn heart icon red
+                    alert(data.message);
+                } else if (data.status === "warning") {
+                    alert(data.message);
+                } else {
+                    alert("Something went wrong.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("Something went wrong. Please try again.");
+            });
+        }
+    </script>
+</body>
+</html>

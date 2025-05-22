@@ -1,0 +1,164 @@
+.main-content {
+    padding: 30px 40px;
+    transition: margin-left 0.3s ease-in-out;
+    margin-top: 120px;
+}
+
+.product-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive grid */
+    gap: 30px;
+}
+
+.product-card {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    text-align: center;
+    position: relative;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 500px;
+    text-decoration: none; /* Remove underline from product card */
+
+}
+
+.product-card:hover {
+    transform: scale(1.03);
+}
+
+.product-card img {
+    width: 100%;
+    height: 350px; /* Increased height for better visibility */
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.product-card h2 {
+    font-size: 15px; /* Increased font size */
+    margin: 15px 0 5px;
+    color: #000000; /* Changed color to black */
+    font-weight: lighter; /* Made the name bold */
+    font-family: 'Poppins', sans-serif; /* Changed font family */
+    text-transform: capitalize; /* Capitalized the name */
+    text-decoration: none; /* Remove underline from product name */
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.product-card h2:hover {
+    color: #000000; /* Darker blue on hover */
+    text-decoration: none; /* Ensure no underline on hover */
+}
+
+.product-card a {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit the color from the parent element */
+}
+
+.product-card a:hover {
+    text-decoration: none; /* Ensure no underline on hover */
+}
+
+.product-card-link {
+    text-decoration: none; /* Remove underline from the link */
+    color: inherit; /* Inherit the color from the parent element */
+    display: block; /* Make the entire card clickable */
+}
+
+.product-card-link:hover {
+    text-decoration: none; /* Ensure no underline on hover */
+}
+
+.product-card .price-wishlist {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Pushes the price and wishlist button to the bottom */
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+    text-decoration: none; /* Adds a separator line */
+}
+
+.product-card .price-wishlist p {
+    font-size: 18px;
+    font-weight: bold; /* Bold the price */
+    font-family: 'Arial', sans-serif; /* Change font of price */
+    color: #333;
+    margin: 0;
+    text-decoration: none; /* Remove underline from product price */
+}
+
+.wishlist-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #ddd;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wishlist-btn i {
+    font-size: 18px;
+    color: #666;
+}
+
+.wishlist-btn.liked i {
+    color: red;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-content {
+    margin-top: 120px;
+}
+
+#loading {
+    text-align: center;
+    margin: 20px 0;
+    display: none;
+}
+
+/* Pagination Styling */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    text-decoration: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #333;
+    font-size: 14px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination a:hover {
+    background-color: #f0f0f0;
+    color: #007BFF;
+}
+
+.pagination .current {
+    padding: 8px 12px;
+    margin: 0 5px;
+    font-weight: bold;
+    background-color: #007BFF;
+    color: white;
+    border-radius: 5px;
+}

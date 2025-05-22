@@ -1,0 +1,19 @@
+{% extends 'main.html' %}
+{% load static %}
+
+{% block title %}Women{% endblock %}
+{% block breadcrumb %}
+   
+    <div class="item primary-font">
+        <a href="{% url 'women' %}"><span>Women</span></a>
+    </div>
+{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'admin/css/main.css' %}">
+
+{% endblock %}
+
+{% block content %}
+    {% include 'product_view.html' %}
+{% endblock %}

@@ -1,0 +1,14 @@
+django
+stripe
+selenium
+mysqlclient
+dotenv
+pillow
+mysql
+django-allauth
+jwt
+twilio
+python-decouple
+decouple
+
+

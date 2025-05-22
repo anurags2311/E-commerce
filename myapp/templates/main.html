@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <title>{% block title %}PeaQ - Home{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'admin/css/main.css' %}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="bread-crumb">
+        <div class="breadcrumb-container">
+            <div class="breadcrumb-inner-container">
+                <div class="item">
+                    <a href="{% url 'home' %}"><span>Home</span></a>
+                    <span class="divider">/</span>
+                </div>
+                {% block breadcrumb %}
+                <!-- Page-specific breadcrumbs go here -->
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="header">
+        <form method="get" action="{% url 'search_products' %}" class="search-bar">
+            <input type="text" name="query" placeholder="Search for clothing..." required>
+            <input type="image" src="{% static 'admin/img/search.png' %}" alt="Search">
+        </form>
+        
+        <div class="logo-container">
+            <a href="{% url 'home' %}">
+                <img src="{% static 'admin/img/logo.png' %}" alt="PeaQ Logo">
+            </a>
+        </div>
+
+        <div class="header-actions">
+            <div class="dropdown">
+                <img src="{% static 'admin/img/profile.png' %}" alt="Profile">
+                <div class="dropdown-content">
+                    <a href="{% url 'my_orders' %}?user={{ user.id }}">My Orders</a>
+                    <a href="{% url 'my_profile' %}?user={{ user.id }}">My Profile</a>
+                    <a href="{% url 'logout' %}?user={{ user.id }}">Logout</a>
+                </div>
+            </div>
+            <a href="{% url 'wishlist' %}?user={{ user.id }}"><img src="{% static 'admin/img/wishlist.png' %}" alt="Wishlist"></a>
+            <a href="{% url 'cart' %}"><img src="{% static 'admin/img/cart.png' %}" alt="Cart"></a>
+        </div>
+    </div>
+
+    <div class="navbar">
+        <ul>
+            <li>
+                <a href="{% url 'men' %}#men">Men</a>
+                <div class="submenu">
+                    <ul>
+                        <li><a href="{% url 'men_shirts' %}#shirts">Shirts</a></li>
+                        <li><a href="{% url 'men_polos' %}#polo-tshirts">Polo T-Shirts</a></li>
+                        <li><a href="{% url 'men_bottomwear' %}#bottomwear">Bottomwear</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="{% url 'women' %}#women">Women</a>
+                <div class="submenu">
+                    <ul>
+                        <li><a href="{% url 'women_topwear' %}#topwear">Topwear</a></li>
+                        <li><a href="{% url 'women_bottomwear' %}#bottomwear">Bottomwear</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a href="{% url 'accessories' %}#accessories">Accessories</a>
+                <div class="submenu">
+                    <ul>
+                        <li><a href="{% url 'accessories_belts' %}#belts">Belts</a></li>
+                        <li><a href="{% url 'accessories_socks' %}#socks">Socks</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    {% block content %}
+    <!-- Page-specific content will be injected here -->
+    {% endblock %}
+
+    <!-- Footer -->
+    <footer class="footer">
+      
+        <div class="footer-bottom">
+            <p>&copy; 2025 PeaQ. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
