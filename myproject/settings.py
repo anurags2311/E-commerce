@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-+1im&wlqp-nazj=9z72c@%x2^(f92u=z*os-y^x1)ql)*y_8h5'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -90,7 +90,7 @@ WSGI_APPLICATION = 'myproject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv("DB_NAME", "default_db_name"),  # Default value for safety
+        'NAME': os.getenv("DB_NAME", "default_db_name"),
         'USER': os.getenv("DB_USER", "default_user"),
         'PASSWORD': os.getenv("DB_PASS"),
         'HOST': os.getenv("DB_HOST", "localhost"),
@@ -154,7 +154,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STRIPE_WEBHOOK_SECRET = "whsec_efa34fa48199021ca67941b771dd6460e8e7bbeac2c2432749881a008c7832f6"
+STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
 AUTH_USER_MODEL = 'myapp.User'
 
@@ -197,24 +197,24 @@ SOCIALACCOUNT_EMAIL_REQUIRED = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 # Add these to the environment or settings (Not recommended for production)
-SOCIAL_AUTH_GOOGLE_CLIENT_ID = "132660533723-tok3vf0f2h5sk9rmss0ifrfl7r4id2bb.apps.googleusercontent.com"
-SOCIAL_AUTH_GOOGLE_SECRET = "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"
+SOCIAL_AUTH_GOOGLE_CLIENT_ID = os.getenv('SOCIAL_AUTH_GOOGLE_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_SECRET = os.getenv('SOCIAL_AUTH_GOOGLE_SECRET')
 
 
 
 
-TWILIO_ACCOUNT_SID = 'ACea6cd7870c4efe1f09ccf4fddb4dbb32'
-TWILIO_AUTH_TOKEN = '12872bcf92208fdbd59e9e1e7eed48d4'
-TWILIO_PHONE_NUMBER = "(856) 215-4692"
-TWILIO_VERIFY_SERVICE_SID = 'VAbe7946c2285b09811bd2fd400ff6c5be'
+TWILIO_ACCOUNT_SID = os.getenv('TWILIO_ACCOUNT_SID')
+TWILIO_AUTH_TOKEN = os.getenv('TWILIO_AUTH_TOKEN')
+TWILIO_PHONE_NUMBER = os.getenv('TWILIO_PHONE_NUMBER')
+TWILIO_VERIFY_SERVICE_SID = os.getenv('TWILIO_VERIFY_SERVICE_SID')
 
 
 # settings.py
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Replace with your SMTP server
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'projectpeaq@gmail.com'  # Replace with your email
-EMAIL_HOST_PASSWORD = 'robw uzll sdql lccv'  # Replace with your email password
-DEFAULT_FROM_EMAIL = 'projectpeaq@gmail.com'
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
